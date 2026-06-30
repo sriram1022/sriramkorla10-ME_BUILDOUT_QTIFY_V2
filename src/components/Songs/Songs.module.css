@@ -1,0 +1,17 @@
+.tabsWrapper {
+  width: 100%;
+}
+
+.tabs {
+  color: #fff;
+}
+
+.tab {
+  text-transform: none;
+  font-weight: 600;
+  color: #9e9e9e;
+}
+
+.tab.Mui-selected {
+  color: var(--color-green);
+}

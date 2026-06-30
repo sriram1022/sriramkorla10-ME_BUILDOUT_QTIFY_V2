@@ -4,7 +4,12 @@ import Card from "../Card/Card";
 import Carousel from "../Carousel/Carousel";
 import styles from "./Section.module.css";
 
-function Section({ title = "Top Albums", endpoint = "https://qtify-backend.labs.crio.do/albums/top" }) {
+function Section({
+    title = "Top Albums",
+    endpoint = "https://qtify-backend.labs.crio.do/albums/top",
+    renderContent,
+    allowCollapse = true,
+}) {
     const [albums, setAlbums] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -29,13 +34,15 @@ function Section({ title = "Top Albums", endpoint = "https://qtify-backend.labs.
         <section className={styles.section}>
             <div className={styles.header}>
                 <h2>{title}</h2>
-                <button
-                    type="button"
-                    className={styles.collapseButton}
-                    onClick={() => setCollapsed((c) => !c)}
-                >
-                    {collapsed ? "Show All" : "Collapse"}
-                </button>
+                {allowCollapse && (
+                    <button
+                        type="button"
+                        className={styles.collapseButton}
+                        onClick={() => setCollapsed((c) => !c)}
+                    >
+                        {collapsed ? "Show All" : "Collapse"}
+                    </button>
+                )}
             </div>
 
             {loading && <p className={styles.message}>Loading albums...</p>}
@@ -43,7 +50,9 @@ function Section({ title = "Top Albums", endpoint = "https://qtify-backend.labs.
 
             {!loading && !error && (
                 <>
-                    {collapsed ? (
+                    {renderContent ? (
+                        renderContent({ items: albums, collapsed, setCollapsed })
+                    ) : collapsed ? (
                         <Carousel items={albums} renderItem={(a) => <Card key={a.id} album={a} />} />
                     ) : (
                         <div className={styles.grid}>
