@@ -1,0 +1,27 @@
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.slide {
+  display: flex;
+  justify-content: center;
+}
+
+.navLeft,
+.navRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+}
+
+.navLeft {
+  left: 8px;
+}
+
+.navRight {
+  right: 8px;
+}

@@ -10,6 +10,7 @@ function App() {
       <main className="App-content">
         <Hero />
         <Section />
+        <Section title="New Albums" endpoint="https://qtify-backend.labs.crio.do/albums/new" />
       </main>
     </div>
   );

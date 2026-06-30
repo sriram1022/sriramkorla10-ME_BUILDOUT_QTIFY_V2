@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../Card/Card";
+import Carousel from "../Carousel/Carousel";
 import styles from "./Section.module.css";
 
-function Section() {
+function Section({ title = "Top Albums", endpoint = "https://qtify-backend.labs.crio.do/albums/top" }) {
     const [albums, setAlbums] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
-        async function fetchTopAlbums() {
+        async function fetchAlbums() {
             try {
-                const response = await axios.get("https://qtify-backend.labs.crio.do/albums/top");
+                const response = await axios.get(endpoint);
                 setAlbums(response.data);
             } catch (err) {
                 setError("Unable to load albums.");
@@ -20,27 +22,37 @@ function Section() {
             }
         }
 
-        fetchTopAlbums();
-    }, []);
+        fetchAlbums();
+    }, [endpoint]);
 
     return (
         <section className={styles.section}>
             <div className={styles.header}>
-                <h2>Top Albums</h2>
-                <button type="button" className={styles.collapseButton}>
-                    Collapse
+                <h2>{title}</h2>
+                <button
+                    type="button"
+                    className={styles.collapseButton}
+                    onClick={() => setCollapsed((c) => !c)}
+                >
+                    {collapsed ? "Show All" : "Collapse"}
                 </button>
             </div>
 
-            {loading && <p className={styles.message}>Loading top albums...</p>}
+            {loading && <p className={styles.message}>Loading albums...</p>}
             {error && <p className={styles.message}>{error}</p>}
 
             {!loading && !error && (
-                <div className={styles.grid}>
-                    {albums.map((album) => (
-                        <Card key={album.id} album={album} />
-                    ))}
-                </div>
+                <>
+                    {collapsed ? (
+                        <Carousel items={albums} renderItem={(a) => <Card key={a.id} album={a} />} />
+                    ) : (
+                        <div className={styles.grid}>
+                            {albums.map((album) => (
+                                <Card key={album.id} album={album} />
+                            ))}
+                        </div>
+                    )}
+                </>
             )}
         </section>
     );
