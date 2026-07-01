@@ -15,7 +15,7 @@ function Navbar() {
             id="navbar-search"
             className={styles.searchInput}
             type="search"
-            placeholder="search"
+            placeholder="search a song"
             aria-label="Search"
           />
         </label>
