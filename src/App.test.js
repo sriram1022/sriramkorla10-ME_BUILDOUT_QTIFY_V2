@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import Navbar from './components/Navbar/Navbar';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('navbar renders logo, search input, and feedback button', () => {
+  render(<Navbar />);
+
+  expect(screen.getByAltText(/logo/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /give feedback/i })).toBeInTheDocument();
 });

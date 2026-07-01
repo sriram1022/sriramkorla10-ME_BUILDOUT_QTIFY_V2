@@ -6,11 +6,20 @@ import styles from "./Navbar.module.css";
 function Navbar() {
   return (
     <nav className={styles.navbar}>
-      <a href="/">
+      <a href="/" className={styles.logoLink}>
         <Logo />
       </a>
       <div className={styles.navActions}>
-        <Button>Give Feedback</Button>
+        <label className={styles.searchWrapper} htmlFor="navbar-search">
+          <input
+            id="navbar-search"
+            className={styles.searchInput}
+            type="search"
+            placeholder="search"
+            aria-label="Search"
+          />
+        </label>
+        <Button className={styles.feedbackButton}>Give Feedback</Button>
       </div>
     </nav>
   );
